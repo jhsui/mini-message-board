@@ -9,11 +9,13 @@
         <li>Message Text: <%= message.text %></li>
         <li>Message User: <%= message.user %></li>
         <li>Date Added: <%= message.added %></li>
+        <a href="/detail/<%= message.text %>/<%= message.user %>/<%= message.added %>">Open</a>
       </ul>
 
     </li>
     <% }) %>
   </ul>
+  <a href="/new">Add New Message</a>
 </body>
 
 </html>

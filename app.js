@@ -13,10 +13,16 @@ app.get("/new", (req, res) => {
 });
 
 app.post("/new", (req, res) => {
-  const messageText = req.body.messageText;
-  const messageUser = req.body.messageUser;
-  messages.push({ text: messageText, user: messageUser, added: new Date() });
+  messages.push({
+    text: req.body.messageText,
+    user: req.body.messageUser,
+    added: new Date(),
+  });
   res.redirect("/");
+});
+
+app.get("/detail/:text/:user/:added", (req, res) => {
+  res.render("detail", { info: req.params });
 });
 
 const messages = [
