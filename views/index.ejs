@@ -1,0 +1,19 @@
+<html>
+
+<body>
+  <ul>
+    <% messages.map((message) => { %>
+    <li>
+
+      <ul>
+        <li>Message Text: <%= message.text %></li>
+        <li>Message User: <%= message.user %></li>
+        <li>Date Added: <%= message.added %></li>
+      </ul>
+
+    </li>
+    <% }) %>
+  </ul>
+</body>
+
+</html>
