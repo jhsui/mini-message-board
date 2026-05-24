@@ -12,7 +12,15 @@ async function insert(message, user) {
   );
 }
 
+async function getID(id) {
+  const { row } = await pool.query(`SELECT * FROM messages WHERE id = ($1)`, [
+    id,
+  ]);
+  return row;
+}
+
 export default {
   getAll,
   insert,
+  getID,
 };

@@ -2,14 +2,14 @@
 
 <body>
   <ul>
-    <% messages.map((message) => { %>
+    <% messages.foreach((row) => { %>
     <li>
 
       <ul>
-        <li>Message Text: <%= message.message %></li>
-        <li>Message User: <%= message.username %></li>
-        <li>Date Added: <%= message.date %></li>
-        <a href="/detail/<%= message.message %>/<%= message.username %>/<%= message.date %>">Open</a>
+        <li>Message Text: <%= row.message %></li>
+        <li>Message User: <%= row.username %></li>
+        <li>Date Added: <%= row.date %></li>
+        <a href="/detail/<%= row.id %>">Open</a>
       </ul>
 
     </li>

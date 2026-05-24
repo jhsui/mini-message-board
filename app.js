@@ -24,8 +24,9 @@ app.post("/new", async (req, res) => {
   res.redirect("/");
 });
 
-app.get("/detail/:message/:username/:date", (req, res) => {
-  res.render("detail", { info: req.params });
+app.get("/detail/:id", async (req, res) => {
+  const row = await db.getID(req.params.id);
+  res.render("detail", { row });
 });
 
 // const messages = [
