@@ -44,7 +44,7 @@ app.get("/detail/:message/:username/:date", (req, res) => {
 // ];
 
 app.get("/", (req, res) => {
-  const messages = db.getAll();
+  const messages = await db.getAll();
   res.render("index", { title: "Mini Messageboard", messages: messages });
 });
 
