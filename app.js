@@ -13,16 +13,14 @@ app.get("/new", (req, res) => {
   res.render("form");
 });
 
-app.post("/new", (req, res) => {
+app.post("/new", async (req, res) => {
   // messages.push({
   //   text: req.body.messageText,
   //   user: req.body.messageUser,
   //   added: new Date(),
   // });
-  const message = req.body.message;
-  const username = req.body.username;
 
-  db.insert(message, username);
+  await db.insert(req.body.message, req.body.username);
   res.redirect("/");
 });
 
@@ -43,7 +41,7 @@ app.get("/detail/:message/:username/:date", (req, res) => {
 //   },
 // ];
 
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
   const messages = await db.getAll();
   res.render("index", { title: "Mini Messageboard", messages: messages });
 });
