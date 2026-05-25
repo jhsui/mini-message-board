@@ -1,4 +1,13 @@
 <h1>This is the form</h1>
+
+<% if (locals.errors) {%>
+<ul>
+  <% errors.forEach(function(error) { %>
+  <li><%= error.msg %></li>
+  <% }); %>
+</ul>
+<% } %>
+
 <form method="POST" action="/new">
 
   <label>Author Name:

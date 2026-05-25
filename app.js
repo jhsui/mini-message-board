@@ -1,6 +1,7 @@
 import express from "express";
 import path from "node:path";
 import db from "./db/queries.js";
+import { body, validationResult, matchedData } from "express-validator";
 
 const app = express();
 
@@ -13,21 +14,54 @@ app.get("/new", (req, res) => {
   res.render("form");
 });
 
-app.post("/new", async (req, res) => {
-  // messages.push({
-  //   text: req.body.messageText,
-  //   user: req.body.messageUser,
-  //   added: new Date(),
+const validate = [
+  body("message").trim().notEmpty().withMessage("Message can not be empty."),
+
+  body("username")
+    .trim()
+    .notEmpty()
+    .withMessage("Username can not be empty.")
+    .isAlphanumeric()
+    .withMessage("Username must only contain letters and numbers.")
+    .isLength({ max: 120 })
+    .withMessage("Username is too long."),
+];
+
+const messageCreatePost = [
+  validate,
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).render("form", {
+        errors: errors.array(),
+      });
+    }
+
+    const { message, username } = matchedData(req);
+    await db.insert(message, username);
+    res.redirect("/");
+  },
+];
+
+app.post(
+  "/new",
+  //   async (req, res) => {
+  //   // messages.push({
+  //   //   text: req.body.messageText,
+  //   //   user: req.body.messageUser,
+  //   //   added: new Date(),
+  //   // });
+
+  //   await db.insert(req.body.message, req.body.username);
+  //   res.redirect("/");
   // });
 
-  await db.insert(req.body.message, req.body.username);
-  res.redirect("/");
-});
-
-app.get("/detail/:id", async (req, res) => {
-  const row = await db.getID(req.params.id);
-  res.render("detail", { row });
-});
+  // app.get("/detail/:id", async (req, res) => {
+  //   const row = await db.getID(req.params.id);
+  //   res.render("detail", { row });
+  // }
+  messageCreatePost,
+);
 
 // const messages = [
 //   {
