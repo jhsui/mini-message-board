@@ -56,12 +56,13 @@ app.post(
   //   res.redirect("/");
   // });
 
-  // app.get("/detail/:id", async (req, res) => {
-  //   const row = await db.getID(req.params.id);
-  //   res.render("detail", { row });
-  // }
   messageCreatePost,
 );
+
+app.get("/detail/:id", async (req, res) => {
+  const row = await db.getID(req.params.id);
+  res.render("detail", { row });
+});
 
 // const messages = [
 //   {
